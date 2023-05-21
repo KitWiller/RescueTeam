@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RescueTeam.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +9,101 @@ namespace RescueTeam.Controllers
     [ApiController]
     public class MissionController : ControllerBase
     {
-        // GET: api/<MissionController>
+        private readonly IMissionWorkerService _service;
+
+        public MissionController(IMissionWorkerService service)
+        {
+            _service = service;
+        }
+
+
+
+        //Get ALL
+        [ProducesResponseType(typeof(MissionGetAllResponse), 200)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(await _service.ReadAll());
         }
 
-        // GET api/<MissionController>/5
+           // GET api/<MissionController>/5
+        [ProducesResponseType(typeof(MissionGetByIdResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            try
+            {
+                var associate = await _service.Read(id);
+                return Ok(associate);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
+        // POST api/<TeamController>/5
 
-        // POST api/<MissionController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<MissionController>/5
+        [ProducesResponseType(typeof(MissionPutResponse), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 400)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, MissionPutRequest mission)
         {
+            try
+            {
+                return Ok(await _service.Update(id, mission));
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+
+        // put api/<MissionController>/5
+
+        [ProducesResponseType(typeof(MissionPutResponse), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 400)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, MissionPutRequest mission)
+        {
+            try
+            {
+                return Ok(await _service.Update(id, mission));
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         // DELETE api/<MissionController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            try
+            {
+                await _service.Delete(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
         }
     }
 }

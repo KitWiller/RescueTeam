@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RescueTeam.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +9,101 @@ namespace RescueTeam.Controllers
     [ApiController]
     public class TeamController : ControllerBase
     {
-        // GET: api/<TeamController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ITeamWorkerService _service;
+
+        public TeamController(ITeamWorkerService service)
         {
-            return new string[] { "value1", "value2" };
+            _service = service;
+        }
+
+
+
+        //Get ALL
+        [ProducesResponseType(typeof(TeamGetAllResponse), 200)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _service.ReadAll());
         }
 
         // GET api/<TeamController>/5
+        [ProducesResponseType(typeof(TeamGetByIdResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            try
+            {
+                var associate = await _service.Read(id);
+                return Ok(associate);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
+        // POST api/<TeamController>/5
 
-        // POST api/<TeamController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<TeamController>/5
+        [ProducesResponseType(typeof(TeamPutResponse), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 400)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, TeamPutRequest team)
         {
+            try
+            {
+                return Ok(await _service.Update(id, team));
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+
+        // put api/<TeamController>/5
+
+        [ProducesResponseType(typeof(TeamPutResponse), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 400)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, TeamPutRequest team)
+        {
+            try
+            {
+                return Ok(await _service.Update(id, team));
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         // DELETE api/<TeamController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            try
+            {
+                await _service.Delete(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
         }
     }
 }

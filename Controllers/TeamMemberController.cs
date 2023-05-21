@@ -59,7 +59,7 @@ namespace RescueTeam.Controllers
             );
         }
 
-        // GET api/<TeamController>/5
+        // put api/<TeamController>/5
 
         [ProducesResponseType(typeof(TeamMemberPutResponse), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 400)]
