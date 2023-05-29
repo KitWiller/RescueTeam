@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RescueTeam.Models.TeamMember;
+using RescueTeam.Services;
 using RescueTeam.Services.Abstract;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,7 +23,7 @@ namespace RescueTeam.Controllers
         //convenzione REST, ritorna statuscode E TUTTI ASYNC
 
         //Get ALL
-        [ProducesResponseType(typeof(TeamMemberGetAllResponse),200)]
+        [ProducesResponseType(typeof(List<TeamMemberSimpleResponse>),200)]
         [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpGet]
         public async Task<IActionResult> GetAll()

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RescueTeam.DAL.Entities;
+using RescueTeam.Models.TeamMember;
 using RescueTeam.Services.Abstract;
 
 namespace RescueTeam.Services.Concrete
@@ -37,14 +38,14 @@ namespace RescueTeam.Services.Concrete
 
         public async Task Delete(int id)
         {
-            if (!isValid(id))//se non è valido l'id
+            if (!IsValid(id))//se non è valido l'id
             {
                 throw new ArgumentException();
             }
 
             //pesca dal contesto, togli da quella lista quel membro con quell'id che gli hai passato
             var members = _context.TeamMembers;
-            members.RemoveRange(new TeamMember {Id = id});
+            members.Remove(new TeamMember {Id = id});
 
             var membersChanged = await _context.SaveChangesAsync();
 
@@ -55,7 +56,7 @@ namespace RescueTeam.Services.Concrete
 
         public async Task<TeamMemberPutResponse> Update(int id, TeamMemberPutRequest updateRequest)
         {
-            if (!isValid(id))//se non è valido l'id
+            if (!IsValid(id))//se non è valido l'id
             {
                 throw new ArgumentException();
             }
@@ -63,23 +64,26 @@ namespace RescueTeam.Services.Concrete
             var members = _context.TeamMembers;
 
             var memberToUpdate = members.FirstOrDefault(x => x.id == id);
-            //da finire
+
+            memberToUpdate.name= updateRequest.name;
+            //per tutte le proprietà che vuoi modificare
+
+            return _mapper.Map<TeamMemberPutResponse>(memberToUpdate); 
         }
 
 
-        public async Task<List<TeamMemberSimpleResponse>> ReadAll()
+        public async Task <List<TeamMemberSimpleResponse>> ReadAll()
         {
             //pesco dal context la lista con tutti i membri
             var members = await _context.TeamMembers.ToListAsync();
 
             //creo nuova lista e ciclo per ogni membro lo butto dentro, mappato come lista di response
             var result = new List<TeamMemberSimpleResponse>();
-            foreach (var member in members)
-            {
-                result.Add(_mapper.Map<TeamMemberSimpleResponse>(member));
-            }
-            //ritorno la lista
-            return result;
+
+            //mappa direttamente la lista 
+            return (_mapper.Map<List<TeamMemberSimpleResponse>>(members));
+            
+       
         }
 
         public async Task<TeamMemberGetByIdResponse> Read(int id)
@@ -89,11 +93,8 @@ namespace RescueTeam.Services.Concrete
                 throw new ArgumentException();
 
             //setto quel member che stiamo cercando con quel particolare id
-            //con INCLUDe è LINQ e mi porto dietro le sue proprietà che poi
+            //con INCLUDe include le navigation property
             var member = await _context.Members
-                .Include(a => a.Name)
-                .Include(a => a.Surname)
-                .Include(a => a.BirthDate)
                 .SingleAsync(a => a.Id);
 
             //vengono mappate in questa response e ritornate
