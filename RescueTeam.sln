@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RescueTeam", "RescueTeam.csproj", "{77595E7B-3300-4B82-83B5-D8DE5F6AC24D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C99094A4-6822-4C17-BC9B-C8798BD3EA4B} = {C99094A4-6822-4C17-BC9B-C8798BD3EA4B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RescueTeam.DAL", "RescueTeam.DAL\RescueTeam.DAL.csproj", "{C99094A4-6822-4C17-BC9B-C8798BD3EA4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RescueTeam.DAL", "RescueTeam.DAL\RescueTeam.DAL.csproj", "{C99094A4-6822-4C17-BC9B-C8798BD3EA4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using RescueTeam.DAL;
 using RescueTeam.DAL.Entities;
 using RescueTeam.Models.TeamMember;
 using RescueTeam.Services.Abstract;
@@ -24,7 +25,7 @@ namespace RescueTeam.Services.Concrete
         public async Task<TeamMemberPostResponse> Create(TeamMemberPostRequest postRequest)
         {
             //variabile in cui salvo il team member mappato come postrequest di tipo TeamMemberPostRequest
-            var teamMembertoCreate = _mapper.Map<TeamMember>(postRequest);
+            var teamMemberToCreate = _mapper.Map<TeamMember>(postRequest);
             
             //il contesto aggiunge alla lista dei membri il nuovo membro mappato
             _context.TeamMembers.Add(teamMembertoCreate);
