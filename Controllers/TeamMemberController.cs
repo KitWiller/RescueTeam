@@ -56,7 +56,7 @@ namespace RescueTeam.Controllers
             var postTeamMemberResponse = await _service.Create(teamMember);
             return CreatedAtAction(
             nameof(Get),
-                new {ID = postTeamMemberResponse.id},
+                new {ID = postTeamMemberResponse.Id},
                     postTeamMemberResponse
             );
         }

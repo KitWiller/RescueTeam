@@ -10,5 +10,7 @@ namespace RescueTeam.Services
         IDelete,
         IUpdate<TeamMemberPutRequest, TeamMemberPutResponse>,
         IRead<TeamMemberGetByIdResponse>,
-        IReadAll<List<TeamMemberSimpleResponse>> { }
+        IReadAll<List<TeamMemberSimpleResponse>>
+    {
+    }
 }

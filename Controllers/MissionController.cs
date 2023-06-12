@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RescueTeam.Models.Mission;
 using RescueTeam.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,7 +20,7 @@ namespace RescueTeam.Controllers
 
 
         //Get ALL
-        [ProducesResponseType(typeof(MissionGetAllResponse), 200)]
+        [ProducesResponseType(typeof(List<MissionSimpleResponse>), 200)]
         [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -51,7 +52,7 @@ namespace RescueTeam.Controllers
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, MissionPutRequest mission)
+        public async Task<IActionResult> Post(int id, MissionPutRequest mission)
         {
             try
             {

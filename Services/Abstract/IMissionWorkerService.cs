@@ -1,14 +1,15 @@
 ﻿using RescueTeam.Services.Abstract.GeneralMethod;
 using System.Collections.Generic;
+using RescueTeam.Models.Mission;
 
 namespace RescueTeam.Services
 {
-    public interface IMissionService :
+    public interface IMissionWorkerService :
         ICreate<MissionPostRequest, MissionPostResponse>,
         IDelete,
         IUpdate<MissionPutRequest, MissionPutResponse>,
         IRead<MissionGetByIdResponse>,
-        IReadAll<MissionGetAllResponse>
+        IReadAll<List<MissionSimpleResponse>>   
 
     {
     }

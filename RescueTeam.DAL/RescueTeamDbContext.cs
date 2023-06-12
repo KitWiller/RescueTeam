@@ -17,7 +17,7 @@ namespace RescueTeam.DAL
 
 
         //solo per demo hard connection strings
-        //in compile time capisce che deve usare sql server DB 
+        //in compile time capisce che deve usare sql server DB
         //e la connection string
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

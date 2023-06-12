@@ -1,14 +1,15 @@
 ﻿using RescueTeam.Services.Abstract.GeneralMethod;
 using System.Collections.Generic;
+using RescueTeam.Models.Team;
 
 namespace RescueTeam.Services
 {
     public interface ITeamWorkerService :
-        ICreate<TeamWorkerPostRequest, TeamWorkerPostResponse>,
+        ICreate<TeamPostRequest, TeamPostResponse>,
         IDelete,
-        IUpdate<TeamWorkerPutRequest, TeamWorkerPutResponse>,
-        IRead<TeamWorkerGetByIdResponse>,
-        IReadAll<TeamWorkerGetAllResponse>
+        IUpdate<TeamPutRequest, TeamPutResponse>,
+        IRead<TeamGetByIdResponse>,
+        IReadAll<List<TeamSimpleResponse>>
 
     {
     }
