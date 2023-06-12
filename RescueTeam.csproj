@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RescueTeam.DAL\**" />
+    <Content Remove="RescueTeam.DAL\**" />
+    <EmbeddedResource Remove="RescueTeam.DAL\**" />
+    <None Remove="RescueTeam.DAL\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Automapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
       <PrivateAssets>all</PrivateAssets>
