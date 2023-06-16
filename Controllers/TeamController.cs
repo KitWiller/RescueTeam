@@ -48,25 +48,16 @@ namespace RescueTeam.Controllers
         }
         // POST api/<TeamController>/5
 
-        [ProducesResponseType(typeof(TeamPutResponse), 200)]
-        [ProducesResponseType(typeof(BadRequestResult), 400)]
-        [ProducesResponseType(typeof(NotFoundResult), 404)]
-        [ProducesResponseType(typeof(InvalidOperationException), 500)]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Post(int id, TeamPutRequest team)
+
+        [HttpPost]
+        public async Task<IActionResult> Post(TeamPostRequest team)
         {
-            try
-            {
-                return Ok(await _service.Update(id, team));
-            }
-            catch (InvalidOperationException)
-            {
-                return NotFound();
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
-            }
+            var postTeamResponse = await _service.Create(team);
+            return CreatedAtAction(
+                nameof(Get),
+                new { ID = postTeamResponse.Id },
+                postTeamResponse
+            );
         }
 
 
