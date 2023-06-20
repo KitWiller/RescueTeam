@@ -16,15 +16,29 @@ namespace RescueTeam.DAL
         public DbSet<Vehicle> Vehicles { get; set; }
 
 
+        public RescueTeamDbContext()
+        {
+        }
+
+        public RescueTeamDbContext(DbContextOptions<RescueTeamDbContext> options)
+            : base(options)
+        {
+        }
+
         //solo per demo hard connection strings
         //in compile time capisce che deve usare sql server DB
         //e la connection string
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //collegamento col provider
-            optionsBuilder.UseSqlServer(
-                "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = RescueTeamDatabase");
-        } 
+            if (!optionsBuilder.IsConfigured)
+            {
+                //collegamento col provider
+                optionsBuilder.UseSqlServer(
+                    "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = RescueTeamDatabase");
+            }
+
+           
+        }
     }
 }

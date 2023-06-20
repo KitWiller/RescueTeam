@@ -40,11 +40,6 @@ namespace RescueTeam.Services.Concrete
 
         public async Task Delete(int id)
         {
-            if (!IsValid(id))//se non è valido l'id
-            {
-                throw new ArgumentException();
-            }
-
             //pesca dal contesto, togli da quella lista quel membro con quell'id che gli hai passato
             var members = _context.TeamMembers;
             members.Remove(new TeamMember {Id = id});
@@ -68,6 +63,8 @@ namespace RescueTeam.Services.Concrete
             var memberToUpdate = members.FirstOrDefault(x => x.Id == id);
 
             memberToUpdate.Name= updateRequest.Name;
+            memberToUpdate.Surname= updateRequest.Surname;
+            memberToUpdate.BirthDate= updateRequest.BirthDate;
             //per tutte le proprietà che vuoi modificare
 
             return _mapper.Map<TeamMemberPutResponse>(memberToUpdate); 
@@ -90,9 +87,6 @@ namespace RescueTeam.Services.Concrete
 
         public async Task<TeamMemberGetByIdResponse> Read(int id)
         {
-            //solita condizione
-            if (!IsValid(id))
-                throw new ArgumentException();
 
             //setto quel member che stiamo cercando con quel particolare id
             //con INCLUDe include le navigation property

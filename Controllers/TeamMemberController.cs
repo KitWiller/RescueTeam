@@ -85,6 +85,9 @@ namespace RescueTeam.Controllers
         }
 
         // DELETE api/<TeamMemberController>/5
+        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -92,6 +95,10 @@ namespace RescueTeam.Controllers
             {
                 await _service.Delete(id);
                 return NoContent();
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
             }
             catch (Exception e)
             {
