@@ -25,6 +25,16 @@ namespace RescueTeam.DAL
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        {
+            modelBuilder.Entity<TeamMember>() //entità n
+                .HasOne<Team>(tm => tm.Team) 
+                .WithMany(t => t.TeamMembers) 
+                .HasForeignKey(tm => tm.CurrentTeamId)
+                .OnDelete(DeleteBehavior.NoAction);
+        }
+
+
         //solo per demo hard connection strings
         //in compile time capisce che deve usare sql server DB
         //e la connection string

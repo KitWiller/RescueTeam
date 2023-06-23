@@ -12,6 +12,6 @@ namespace RescueTeam.DAL.Entities
         public string TeamName { get; set; }
         public Vehicle Trasport { get; set; }
         public int Coordinates { get; set; }
-        public List<TeamMember> Squad { get; set; }
+        public ICollection<TeamMember> TeamMembers { get; set; } //relazione 1 a n con teammember
     }
 }

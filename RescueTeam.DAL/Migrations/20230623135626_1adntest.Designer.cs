@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RescueTeam.DAL;
 
@@ -11,9 +12,11 @@ using RescueTeam.DAL;
 namespace RescueTeam.DAL.Migrations
 {
     [DbContext(typeof(RescueTeamDbContext))]
-    partial class RescueTeamDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230623135626_1adntest")]
+    partial class _1adntest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
