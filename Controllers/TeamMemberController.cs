@@ -68,7 +68,7 @@ namespace RescueTeam.Controllers
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         [ProducesResponseType(typeof(InvalidOperationException), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, TeamMemberPutRequest teamMember)
+        public async Task<IActionResult> Put(int id, [FromBody]TeamMemberPutRequest teamMember)
         {
             try
             {
