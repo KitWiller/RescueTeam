@@ -65,6 +65,7 @@ namespace RescueTeam.Services.Concrete
             memberToUpdate.Name= updateRequest.Name;
             memberToUpdate.Surname= updateRequest.Surname;
             memberToUpdate.BirthDate= updateRequest.BirthDate;
+            memberToUpdate.CurrentTeamId = updateRequest.CurrentTeamId;
             //per tutte le proprietà che vuoi modificare
 
             return _mapper.Map<TeamMemberPutResponse>(memberToUpdate); 
