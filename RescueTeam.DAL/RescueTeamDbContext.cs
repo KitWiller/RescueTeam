@@ -27,7 +27,7 @@ namespace RescueTeam.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-            modelBuilder.Entity<TeamMember>() //entità n
+            modelBuilder.Entity<TeamMember>() 
                 .HasOne<Team>(tm => tm.Team) 
                 .WithMany(t => t.TeamMembers) 
                 .HasForeignKey(tm => tm.CurrentTeamId)
