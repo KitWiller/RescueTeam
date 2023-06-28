@@ -11,5 +11,7 @@ namespace RescueTeam.DAL.Entities
         public int Id { get; set; }
         public string Type { get; set; }
         public int NSeats { get; set; }
+
+        public Team AssignedTeam { get; set; }
     }
 }

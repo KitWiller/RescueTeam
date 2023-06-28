@@ -22,7 +22,7 @@ namespace RescueTeam.Profiles
                 .ForMember(d => d.Name,
                     opt => opt.MapFrom(s => s.Name))
                 .ForMember(d => d.Surname,
-                    opt => opt.MapFrom(s => s.Surname));
+                   opt => opt.MapFrom(s => s.Surname));
 
         }
     }
