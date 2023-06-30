@@ -85,26 +85,26 @@ namespace RescueTeam.Controllers
 
 
         //TeamController/id/teammembers/id
-        //[ProducesResponseType(typeof(TeamPutResponse), 200)]
-        //[ProducesResponseType(typeof(BadRequestResult), 400)]
-        //[ProducesResponseType(typeof(NotFoundResult), 404)]
-        //[ProducesResponseType(typeof(InvalidOperationException), 500)]
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutInTeamMembers(int teamId, int teamMemberId)
-        //{
-        //    try
-        //    {
-        //        return Ok(await _service.UpdateInTeamMembers(teamId, teamMemberId));
-        //    }
-        //    catch (InvalidOperationException)
-        //    {
-        //        return NotFound();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(500);
-        //    }
-        //}
+        [ProducesResponseType(typeof(TeamPutResponse), 200)]
+        [ProducesResponseType(typeof(BadRequestResult), 400)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
+        [ProducesResponseType(typeof(InvalidOperationException), 500)]
+        [HttpPut("{teamId}/TeamMembers/{teamMemberId}")]
+        public async Task<IActionResult> PutInTeamMembers(int teamId, int teamMemberId)
+        {
+            try
+            {
+                return Ok(await _service.UpdateInTeamMembers(teamId, teamMemberId));
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
 
 
         // DELETE api/<TeamController>/5

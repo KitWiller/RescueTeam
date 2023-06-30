@@ -53,19 +53,20 @@ namespace RescueTeam.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Coordinates")
+                    b.Property<int?>("Coordinates")
                         .HasColumnType("int");
 
                     b.Property<string>("TeamName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TrasportId")
+                    b.Property<int>("TransportID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TrasportId");
+                    b.HasIndex("TransportID")
+                        .IsUnique();
 
                     b.ToTable("Teams");
                 });
@@ -81,7 +82,7 @@ namespace RescueTeam.DAL.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CurrentTeamId")
+                    b.Property<int?>("CurrentTeamId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -122,8 +123,8 @@ namespace RescueTeam.DAL.Migrations
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
                     b.HasOne("RescueTeam.DAL.Entities.Vehicle", "Trasport")
-                        .WithMany()
-                        .HasForeignKey("TrasportId")
+                        .WithOne("AssignedTeam")
+                        .HasForeignKey("RescueTeam.DAL.Entities.Team", "TransportID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -135,8 +136,7 @@ namespace RescueTeam.DAL.Migrations
                     b.HasOne("RescueTeam.DAL.Entities.Team", "Team")
                         .WithMany("TeamMembers")
                         .HasForeignKey("CurrentTeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Team");
                 });
@@ -144,6 +144,12 @@ namespace RescueTeam.DAL.Migrations
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
                     b.Navigation("TeamMembers");
+                });
+
+            modelBuilder.Entity("RescueTeam.DAL.Entities.Vehicle", b =>
+                {
+                    b.Navigation("AssignedTeam")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

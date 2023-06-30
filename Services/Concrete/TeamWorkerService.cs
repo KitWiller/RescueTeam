@@ -66,27 +66,31 @@ namespace RescueTeam.Services.Concrete
             return _mapper.Map<TeamPutResponse>(teamToUpdate);
         }
 
-        //public async Task<TeamPutResponse> UpdateInTeamMembers(int teamId, int teamMemberId)
-        //{   
-        //    var teamToUpdate = await _context.Teams //prendo team dal contesto con quell'id
-        //        // .Include(t => t.TeamMembers)
-        //        .FirstOrDefaultAsync(t => t.Id == teamId);
+        public async Task<TeamPutResponse> UpdateInTeamMembers(int teamId, int teamMemberId)
+        {
+            var teamToUpdate = await _context.Teams //prendo team dal contesto con quell'id
+                                                    // .Include(t => t.TeamMembers)
+                .FirstOrDefaultAsync(t => t.Id == teamId);
 
-        //    if (teamToUpdate != null)
-        //    {
-        //        var membertoUpdate = await _context.TeamMembers.FirstOrDefaultAsync(t => t.Id == teamMemberId);
-        //        //prendo membro da aggiungere al team
+            if (teamToUpdate != null)
+            {
+                var membertoUpdate = await _context.TeamMembers.FirstOrDefaultAsync(t => t.Id == teamMemberId);
+                //prendo membro da aggiungere al team
 
-        //        if (membertoUpdate != null)
-        //        {
-        //            teamToUpdate.TeamMembers.Add(membertoUpdate);
-        //        }
+                if (membertoUpdate != null)
+                {
+                    if (teamToUpdate.TeamMembers == null)
+                    {
+                        teamToUpdate.TeamMembers = new List<TeamMember>();
+                    }
+                    teamToUpdate.TeamMembers.Add(membertoUpdate);
+                }
 
-        //        await _context.SaveChangesAsync();
-                
-        //    }
-        //    return _mapper.Map<TeamPutResponse>(teamToUpdate);
-        //}
+                await _context.SaveChangesAsync();
+            }
+
+            return _mapper.Map<TeamPutResponse>(teamToUpdate);
+        }
 
 
         public async Task<List<TeamSimpleResponse>> ReadAll()

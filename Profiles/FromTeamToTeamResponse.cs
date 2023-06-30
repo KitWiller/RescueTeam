@@ -12,8 +12,8 @@ namespace RescueTeam.Profiles
                     opt => opt.Ignore())
                 .ForMember(d => d.TeamName,
                     opt => opt.MapFrom(s => s.TeamName))
-                .ForMember(d => d.Trasport,
-                    opt => opt.MapFrom(s => s.Trasport))
+                .ForMember(d => d.TransportID,
+                    opt => opt.MapFrom(s => s.TransportID))
                 .ForMember(d => d.Coordinates,
                     opt => opt.MapFrom(s => s.Coordinates));
 
@@ -23,8 +23,8 @@ namespace RescueTeam.Profiles
                     opt => opt.Ignore())
                 .ForMember(d => d.TeamName,
                     opt => opt.MapFrom(s => s.TeamName))
-                .ForMember(d => d.Trasport,
-                    opt => opt.MapFrom(s => s.Trasport))
+                .ForMember(d => d.TransportID,
+                    opt => opt.MapFrom(s => s.TransportID))
                 .ForMember(d => d.Coordinates,
                     opt => opt.MapFrom(s => s.Coordinates));
 
