@@ -12,8 +12,8 @@ using RescueTeam.DAL;
 namespace RescueTeam.DAL.Migrations
 {
     [DbContext(typeof(RescueTeamDbContext))]
-    [Migration("20230612151508_test1")]
-    partial class test1
+    [Migration("20230623135626_1adntest")]
+    partial class _1adntest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,9 @@ namespace RescueTeam.DAL.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("CurrentTeamId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -92,12 +95,9 @@ namespace RescueTeam.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId");
+                    b.HasIndex("CurrentTeamId");
 
                     b.ToTable("TeamMembers");
                 });
@@ -135,14 +135,18 @@ namespace RescueTeam.DAL.Migrations
 
             modelBuilder.Entity("RescueTeam.DAL.Entities.TeamMember", b =>
                 {
-                    b.HasOne("RescueTeam.DAL.Entities.Team", null)
-                        .WithMany("Squad")
-                        .HasForeignKey("TeamId");
+                    b.HasOne("RescueTeam.DAL.Entities.Team", "Team")
+                        .WithMany("TeamMembers")
+                        .HasForeignKey("CurrentTeamId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
-                    b.Navigation("Squad");
+                    b.Navigation("TeamMembers");
                 });
 #pragma warning restore 612, 618
         }
