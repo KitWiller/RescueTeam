@@ -6,8 +6,8 @@ namespace RescueTeam.Models.Team
     {
         public int Id { get; set; }
         public string TeamName { get; set; }
-        public Vehicle Trasport { get; set; }
+        public int TransportID { get; set; }
         public int Coordinates { get; set; }
-        public List<DAL.Entities.TeamMember> Squad { get; set; }
+       // public List<DAL.Entities.TeamMember> Squad { get; set; }
     }
 }

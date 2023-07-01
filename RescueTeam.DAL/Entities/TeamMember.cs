@@ -13,7 +13,7 @@ namespace RescueTeam.DAL.Entities
         public string Surname { get; set; }
         public DateTime BirthDate { get; set; }
 
-        public int CurrentTeamId { get; set; }
-        public Team Team { get; set; }
+        public int? CurrentTeamId { get; set; }
+        public Team? Team { get; set; }
     }
 }

@@ -14,8 +14,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddScoped<ITeamMemberWorkerService, TeamMemberWorkerService>();
-//builder.Services.AddScoped<ITeamWorkerService, TeamWorkerService>(); TODO
-//builder.Services.AddScoped<IMissionWorkerService, MissionWorkerService>();
+builder.Services.AddScoped<ITeamWorkerService, TeamWorkerService>();
+builder.Services.AddScoped<IMissionWorkerService, MissionWorkerService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddEndpointsApiExplorer();

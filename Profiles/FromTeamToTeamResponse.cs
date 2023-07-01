@@ -1,6 +1,5 @@
-﻿using RescueTeam.DAL.Entities;
+﻿using AutoMapper;
 using RescueTeam.Models.Team;
-using AutoMapper;
 
 namespace RescueTeam.Profiles
 {
@@ -8,22 +7,46 @@ namespace RescueTeam.Profiles
     {
         public FromTeamToTeamResponse()
         {
-            CreateMap<DAL.Entities.Team,TeamSimpleResponse>()
-                .ForMember(dest => dest.Squad, opt => opt.MapFrom(src => src.TeamMembers));
-
-
-            CreateMap<DAL.Entities.Team, TeamPostResponse>()
-                .ForMember(dest => dest.Squad, opt => opt.MapFrom(src => src.TeamMembers));
+            CreateMap<DAL.Entities.Team, TeamSimpleResponse>()
+                .ForMember(d => d.Id,
+                    opt => opt.Ignore())
+                .ForMember(d => d.TeamName,
+                    opt => opt.MapFrom(s => s.TeamName))
+                .ForMember(d => d.TransportID,
+                    opt => opt.MapFrom(s => s.TransportID))
+                .ForMember(d => d.Coordinates,
+                    opt => opt.MapFrom(s => s.Coordinates));
 
 
             CreateMap<DAL.Entities.Team, TeamGetByIdResponse>()
-                .ForMember(dest => dest.Squad, opt => opt.MapFrom(src => src.TeamMembers));
+                .ForMember(d => d.Id,
+                    opt => opt.Ignore())
+                .ForMember(d => d.TeamName,
+                    opt => opt.MapFrom(s => s.TeamName))
+                .ForMember(d => d.TransportID,
+                    opt => opt.MapFrom(s => s.TransportID))
+                .ForMember(d => d.Coordinates,
+                    opt => opt.MapFrom(s => s.Coordinates));
+
+            CreateMap<DAL.Entities.Team, TeamPostResponse>()
+                .ForMember(d => d.Id,
+                    opt => opt.Ignore())
+                .ForMember(d => d.TeamName,
+                    opt => opt.MapFrom(s => s.TeamName))
+                .ForMember(d => d.Trasport,
+                    opt => opt.MapFrom(s => s.Trasport))
+                .ForMember(d => d.Coordinates,
+                    opt => opt.MapFrom(s => s.Coordinates));
 
             CreateMap<DAL.Entities.Team, TeamPutResponse>()
-                .ForMember(dest => dest.Squad, opt => opt.MapFrom(src => src.TeamMembers));
-
-
-
-        }  
+                .ForMember(d => d.Id,
+                    opt => opt.Ignore())
+                .ForMember(d => d.TeamName,
+                    opt => opt.MapFrom(s => s.TeamName))
+                .ForMember(d => d.Trasport,
+                    opt => opt.MapFrom(s => s.Trasport))
+                .ForMember(d => d.Coordinates,
+                    opt => opt.MapFrom(s => s.Coordinates));
+        }
     }
 }

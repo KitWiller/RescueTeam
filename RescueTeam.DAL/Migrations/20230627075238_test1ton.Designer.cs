@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RescueTeam.DAL;
 
@@ -11,9 +12,11 @@ using RescueTeam.DAL;
 namespace RescueTeam.DAL.Migrations
 {
     [DbContext(typeof(RescueTeamDbContext))]
-    partial class RescueTeamDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230627075238_test1ton")]
+    partial class test1ton
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,20 +56,19 @@ namespace RescueTeam.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Coordinates")
+                    b.Property<int>("Coordinates")
                         .HasColumnType("int");
 
                     b.Property<string>("TeamName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransportID")
+                    b.Property<int>("TrasportId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransportID")
-                        .IsUnique();
+                    b.HasIndex("TrasportId");
 
                     b.ToTable("Teams");
                 });
@@ -82,7 +84,7 @@ namespace RescueTeam.DAL.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CurrentTeamId")
+                    b.Property<int>("CurrentTeamId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -123,8 +125,8 @@ namespace RescueTeam.DAL.Migrations
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
                     b.HasOne("RescueTeam.DAL.Entities.Vehicle", "Trasport")
-                        .WithOne("AssignedTeam")
-                        .HasForeignKey("RescueTeam.DAL.Entities.Team", "TransportID")
+                        .WithMany()
+                        .HasForeignKey("TrasportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -136,7 +138,8 @@ namespace RescueTeam.DAL.Migrations
                     b.HasOne("RescueTeam.DAL.Entities.Team", "Team")
                         .WithMany("TeamMembers")
                         .HasForeignKey("CurrentTeamId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Team");
                 });
@@ -144,12 +147,6 @@ namespace RescueTeam.DAL.Migrations
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
                     b.Navigation("TeamMembers");
-                });
-
-            modelBuilder.Entity("RescueTeam.DAL.Entities.Vehicle", b =>
-                {
-                    b.Navigation("AssignedTeam")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

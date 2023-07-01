@@ -27,12 +27,18 @@ namespace RescueTeam.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-            modelBuilder.Entity<TeamMember>() //entità n
+            modelBuilder.Entity<TeamMember>() 
                 .HasOne<Team>(tm => tm.Team) 
                 .WithMany(t => t.TeamMembers) 
-                .HasForeignKey(tm => tm.CurrentTeamId)
+                .HasForeignKey(tm => tm.CurrentTeamId) //non convenzione, va esplicitata per naming
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Team>()
+                .HasOne(t => t.Trasport)
+                .WithOne(v => v.AssignedTeam)
+                .HasForeignKey<Team>(t => t.TransportID);
         }
+
 
 
         //solo per demo hard connection strings

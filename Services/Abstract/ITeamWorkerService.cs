@@ -10,7 +10,9 @@ namespace RescueTeam.Services
         IUpdate<TeamPutRequest, TeamPutResponse>,
         IRead<TeamGetByIdResponse>,
         IReadAll<List<TeamSimpleResponse>>
-
     {
-    }
-}
+        Task<TeamPutResponse> UpdateInTeamMembers(int teamId, int teamMemberId);
+    };
+   
+    
+}   
