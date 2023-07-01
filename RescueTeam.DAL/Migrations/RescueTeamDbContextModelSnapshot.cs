@@ -60,12 +60,13 @@ namespace RescueTeam.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransportID")
-                        .HasColumnType("int");
+                    b.Property<int>("VehicleID")
+                        .HasColumnType("int")
+                        .HasColumnName("TrasportID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransportID")
+                    b.HasIndex("VehicleID")
                         .IsUnique();
 
                     b.ToTable("Teams");
@@ -122,13 +123,13 @@ namespace RescueTeam.DAL.Migrations
 
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
-                    b.HasOne("RescueTeam.DAL.Entities.Vehicle", "Trasport")
+                    b.HasOne("RescueTeam.DAL.Entities.Vehicle", "Vehicle")
                         .WithOne("AssignedTeam")
-                        .HasForeignKey("RescueTeam.DAL.Entities.Team", "TransportID")
+                        .HasForeignKey("RescueTeam.DAL.Entities.Team", "VehicleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Trasport");
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("RescueTeam.DAL.Entities.TeamMember", b =>

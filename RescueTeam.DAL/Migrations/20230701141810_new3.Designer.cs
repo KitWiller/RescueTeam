@@ -12,8 +12,8 @@ using RescueTeam.DAL;
 namespace RescueTeam.DAL.Migrations
 {
     [DbContext(typeof(RescueTeamDbContext))]
-    [Migration("20230627075238_test1ton")]
-    partial class test1ton
+    [Migration("20230701141810_new3")]
+    partial class new3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,19 +56,21 @@ namespace RescueTeam.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Coordinates")
+                    b.Property<int?>("Coordinates")
                         .HasColumnType("int");
 
                     b.Property<string>("TeamName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
+                    b.Property<int>("VehicleID")
+                        .HasColumnType("int")
+                        .HasColumnName("TrasportID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleId");
+                    b.HasIndex("VehicleID")
+                        .IsUnique();
 
                     b.ToTable("Teams");
                 });
@@ -84,7 +86,7 @@ namespace RescueTeam.DAL.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CurrentTeamId")
+                    b.Property<int?>("CurrentTeamId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -125,8 +127,8 @@ namespace RescueTeam.DAL.Migrations
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
                     b.HasOne("RescueTeam.DAL.Entities.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId")
+                        .WithOne("AssignedTeam")
+                        .HasForeignKey("RescueTeam.DAL.Entities.Team", "VehicleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -138,8 +140,7 @@ namespace RescueTeam.DAL.Migrations
                     b.HasOne("RescueTeam.DAL.Entities.Team", "Team")
                         .WithMany("TeamMembers")
                         .HasForeignKey("CurrentTeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Team");
                 });
@@ -147,6 +148,12 @@ namespace RescueTeam.DAL.Migrations
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
                     b.Navigation("TeamMembers");
+                });
+
+            modelBuilder.Entity("RescueTeam.DAL.Entities.Vehicle", b =>
+                {
+                    b.Navigation("AssignedTeam")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

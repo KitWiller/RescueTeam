@@ -12,8 +12,8 @@ using RescueTeam.DAL;
 namespace RescueTeam.DAL.Migrations
 {
     [DbContext(typeof(RescueTeamDbContext))]
-    [Migration("20230630084817_UpdateTeamTransportID")]
-    partial class UpdateTeamTransportID
+    [Migration("20230701141649_new2")]
+    partial class new2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,12 +63,13 @@ namespace RescueTeam.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransportID")
-                        .HasColumnType("int");
+                    b.Property<int>("VehicleID")
+                        .HasColumnType("int")
+                        .HasColumnName("VehicleID");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TransportID")
+                    b.HasIndex("VehicleID")
                         .IsUnique();
 
                     b.ToTable("Teams");
@@ -125,13 +126,13 @@ namespace RescueTeam.DAL.Migrations
 
             modelBuilder.Entity("RescueTeam.DAL.Entities.Team", b =>
                 {
-                    b.HasOne("RescueTeam.DAL.Entities.Vehicle", "Trasport")
+                    b.HasOne("RescueTeam.DAL.Entities.Vehicle", "Vehicle")
                         .WithOne("AssignedTeam")
-                        .HasForeignKey("RescueTeam.DAL.Entities.Team", "TransportID")
+                        .HasForeignKey("RescueTeam.DAL.Entities.Team", "VehicleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Trasport");
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("RescueTeam.DAL.Entities.TeamMember", b =>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,10 @@ namespace RescueTeam.DAL.Entities
         public ICollection<TeamMember> TeamMembers { get; set; } //relazione 1 a n con teammember
 
 
+        public Vehicle Vehicle { get; set; }
 
-        public Vehicle Trasport { get; set; }
-        public int TransportID { get; set; }
+        [Column("TrasportID")]
+        public int VehicleID { get; set; }
 
     }
 }

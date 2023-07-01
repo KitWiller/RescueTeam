@@ -34,9 +34,9 @@ namespace RescueTeam.DAL
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Team>()
-                .HasOne(t => t.Trasport)
+                .HasOne(t => t.Vehicle)
                 .WithOne(v => v.AssignedTeam)
-                .HasForeignKey<Team>(t => t.TransportID);
+                .HasForeignKey<Team>(t => t.VehicleID);
         }
 
 

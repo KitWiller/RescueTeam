@@ -45,7 +45,7 @@ namespace RescueTeam.Services.Concrete
 
             teamToUpdate.TeamName= updateRequest.TeamName;
             teamToUpdate.Coordinates= updateRequest.Coordinates;
-            teamToUpdate.Trasport= updateRequest.Trasport;
+            teamToUpdate.Vehicle= updateRequest.Vehicle;
 
             //foreach (var member in updateRequest.Squad)
             //{
