@@ -136,7 +136,7 @@ namespace RescueTeam.DAL.Migrations
             modelBuilder.Entity("RescueTeam.DAL.Entities.TeamMember", b =>
                 {
                     b.HasOne("RescueTeam.DAL.Entities.Team", null)
-                        .WithMany("Squad")
+                        .WithMany("TeamMembers")
                         .HasForeignKey("TeamId");
                 });
 
